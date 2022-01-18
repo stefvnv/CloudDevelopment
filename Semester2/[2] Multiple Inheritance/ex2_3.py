@@ -1,11 +1,9 @@
-
-
 from tkinter import *
 window = Tk()
 window.geometry("300x340")
 window.title("Welcome")
 
-from Ex223MyClasses import *
+from ex2_3Class import *
 
 
 #------------end of class definition------------------

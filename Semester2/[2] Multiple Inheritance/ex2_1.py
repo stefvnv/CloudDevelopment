@@ -5,7 +5,7 @@ window = Tk()
 window.geometry("300x300")
 window.title("Welcome")
 
-from Ex221MyClasses import *
+from ex2_1Class import *
 
 #------------end of class definition------------------
 
