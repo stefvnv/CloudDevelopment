@@ -7,6 +7,10 @@ def main():
 
 def mySearch(setp1,setp2, tar):
     result = False
+    setp3 = setp1.union(setp2)
+    for el in setp3:
+        if el == tar:
+            result = True
     return result
 
 main()
