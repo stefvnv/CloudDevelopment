@@ -1,16 +1,18 @@
 def main():
-    set1= {2, 5, 2, 8, 7}
-    set2= {1,2,3,4}
+    set1 = {2, 5, 2, 8, 7}
+    set2 = {1, 2, 3, 4}
     target = int(input('Enter Target: '))
-    result = mySearch(set1,set2, target)
+    result = mySearch(set1, set2, target)
     print('Element {0} found in at least 1 set = {1}'.format(target, result))
 
-def mySearch(setp1,setp2, tar):
+
+def mySearch(setp1, setp2, tar):
     result = False
     setp3 = setp1.union(setp2)
     for el in setp3:
         if el == tar:
             result = True
     return result
+
 
 main()
