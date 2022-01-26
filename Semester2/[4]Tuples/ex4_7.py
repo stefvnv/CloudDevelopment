@@ -34,6 +34,10 @@ def update():
     value = entry3.get()
     studentList.update({key: value})
 
+    # OR
+
+    # update(studentList, key,value)
+
 
 studentList = {'Smith': '0874231234', 'Jones': '0861234123', 'peters': '0857878781', 'Adams': '0441234561',
                'Cross': '0874234566'}
