@@ -1,5 +1,3 @@
-
-
 from tkinter import *
 window = Tk()
 window.geometry("300x300")
@@ -19,44 +17,44 @@ def display():
     entry2b.insert(END, value2)
 
 
-
-
 def depositEvent():
-    amt=int(entry4.get())
-    res= a1.stepUp(amt)
+    amt = int(entry4.get())
+    res = a1.stepUp(amt)
     display()
-    if (res==True):
+    if res == True:
         entry6.delete(0, END)  # delete old value
         entry6.insert(END, "Success")
     else:
         entry6.delete(0, END)  # delete old value
         entry6.insert(END, "Exceeds Limit")
 
+
 def resetEvent():
-    amt=int(entry3.get())
+    amt = int(entry3.get())
     a1.resetLimit(amt)
     display()
 
 
 def withdrawEvent():
     amt = int(entry5.get())
-    res=a1.stepDown(amt)
+    res = a1.stepDown(amt)
     display()
-    if (res==True):
+
+    if res == True:
         entry6.delete(0, END)  # delete old value
         entry6.insert(END, "Success")
     else:
         entry6.delete(0, END)  # delete old value
         entry6.insert(END, "Not Allowed")
 
-a1=MyStepper(8,100)
 
+a1 = MyStepper(8, 100)
 
-label1 = Label(window, text="Stepper Details", fg="blue",bg="yellow", font=("arial", 16, "bold"))   #
+label1 = Label(window, text="Stepper Details", fg="blue", bg="yellow", font=("arial", 16, "bold"))   #
 label1.place(x=90, y=30)                            # place on screen
 
 
-button4= Button(window, text="ResetLimit", fg="black", font=("arial", 10, "bold"), command=resetEvent)
+button4 = Button(window, text="ResetLimit", fg="black", font=("arial", 10, "bold"), command=resetEvent)
 button4.place(x=40, y=140)
 
 
@@ -75,14 +73,12 @@ label3b = Label(window, text="UpperLimit", fg="blue", width=8, font=("arial", 10
 label3b.place(x=10, y=110)
 
 
-
 entry3 = Entry(window)
 entry3.insert(END, '140')
 entry3.place(x=120, y=140)
 
 
-
-button4= Button(window, text="stepUp", fg="black", font=("arial", 10, "bold"), command=depositEvent)
+button4 = Button(window, text="stepUp", fg="black", font=("arial", 10, "bold"), command=depositEvent)
 button4.place(x=40, y=170)
 
 entry4 = Entry(window)

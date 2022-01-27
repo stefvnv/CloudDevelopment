@@ -13,17 +13,17 @@ class Account:
         else:
             return False
 
+    # Extended Class
 
-#Extended Class
+
 class Deposit(Account):
 
     def __init__(self, name, balance):
         super().__init__(balance)
         self.__name = name
 
-    def getName(self):
-        return self.__name
-
     def deposit(self, amt):
         self._balance += amt
 
+    def getName(self):
+        return self.__name

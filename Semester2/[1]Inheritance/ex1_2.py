@@ -21,7 +21,7 @@ def display():
 
 
 def depositEvent():
-    amt=int(entry4.get())
+    amt = int(entry4.get())
     a1.deposit(amt)
     display()
     entry6.delete(0, END)  # delete old value
@@ -33,7 +33,7 @@ def withdrawEvent():
     res=a1.withdraw(amt)
     display()
     entry6.delete(0, END)  # delete old value
-    if res==False:
+    if res == False:
         entry6.insert(END, "Insuff Funds")
     else:
         entry6.insert(END, "Success")
