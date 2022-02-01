@@ -38,3 +38,4 @@ class Module:
 
     def updateLecturerOffice(self, office):
         self._lecturer.updateOffice(office)
+
