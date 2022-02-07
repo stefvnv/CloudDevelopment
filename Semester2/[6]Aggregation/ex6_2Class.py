@@ -54,7 +54,11 @@ class Student:
         return self._course.stepLevel()
 
     def updateAddress(self, address):
+<<<<<<< HEAD
         self._address = address
+=======
+        self._course = address
+>>>>>>> origin/main
 
     def updateCourseTitle(self, title):
         self._course.updateTitle(title)
