@@ -3,10 +3,10 @@
 from tkinter import *
 
 window = Tk()
-window.geometry("1350x350")
+window.geometry("1350x450")
 window.title("Welcome")
 
-from ex8_4Class import *
+from ex8_5Class import *
 
 
 # ------------end of class definition------------------
@@ -35,16 +35,29 @@ def insertEvent():
 
 
 def countEvent():
-    res = a1.countItems()
+    name = entry51.get()
+    res = a1.countOccurs(name)
     entry61.delete(0, END)  # delete old value
     entry61.insert(END, res)
 
 
 def searchEvent():
-    name = entry52.get()
-    res = a1.search(name)
+    age = int(entry52.get())
+    res = a1.findName(age)
     entry62.delete(0, END)  # delete old value
     entry62.insert(END, str(res))
+
+
+def sumEvent():
+    res = a1.sumOfAllAges()
+    entry53.delete(0, END)  # delete old value
+    entry53.insert(END, res)
+
+
+def maxEvent():
+    res = a1.oldest()
+    entry54.delete(0, END)  # delete old value
+    entry54.insert(END, res)
 
 
 list = [2, 59, 7, 88, 9, 11, 102, 22, 27, 28, 29, 34, 55, 60, 61, 65, 68, 71, 73, 75, 77, 8, 89, 9, 96]
@@ -76,8 +89,12 @@ entry6 = Entry(window, width=14, font=("arial", 12, "bold"))
 entry6.insert(END, '8')
 entry6.place(x=320, y=160)
 
-button5 = Button(window, text="Count Items", fg="black", font=("arial", 12, "bold"), command=countEvent)
+button5 = Button(window, text="Count Occurs", fg="black", font=("arial", 12, "bold"), command=countEvent)
 button5.place(x=20, y=210)
+
+entry51 = Entry(window, width=14, font=("arial", 12, "bold"))
+entry51.insert(END, 'B')
+entry51.place(x=170, y=210)
 
 entry61 = Entry(window, width=14, font=("arial", 12, "bold"))
 entry61.insert(END, '')
@@ -85,16 +102,34 @@ entry61.place(x=320, y=210)
 
 # Search
 
-button52 = Button(window, text="search", fg="black", font=("arial", 12, "bold"), command=searchEvent)
+button52 = Button(window, text="findName", fg="black", font=("arial", 12, "bold"), command=searchEvent)
 button52.place(x=20, y=260)
 
 entry52 = Entry(window, width=14, font=("arial", 12, "bold"))
-entry52.insert(END, 'B')
+entry52.insert(END, '21')
 entry52.place(x=170, y=260)
 
 entry62 = Entry(window, width=14, font=("arial", 12, "bold"))
 entry62.insert(END, '')
 entry62.place(x=320, y=260)
+
+# Sum of all Ages
+
+button53 = Button(window, text="sumOfAllAges", fg="black", font=("arial", 12, "bold"), command=sumEvent)
+button53.place(x=20, y=310)
+
+entry53 = Entry(window, width=14, font=("arial", 12, "bold"))
+entry53.insert(END, '')
+entry53.place(x=170, y=310)
+
+# Max Age
+
+button54 = Button(window, text="Oldest", fg="black", font=("arial", 12, "bold"), command=maxEvent)
+button54.place(x=20, y=360)
+
+entry54 = Entry(window, width=14, font=("arial", 12, "bold"))
+entry54.insert(END, '')
+entry54.place(x=170, y=360)
 
 initList()
 
