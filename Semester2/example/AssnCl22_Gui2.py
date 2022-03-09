@@ -1,8 +1,7 @@
-
-
 from tkinter import *
 
 from AssnCL22_Classes import *
+
 
 def displayDialog(window, product_list):
     window2 = Toplevel(window)
@@ -10,28 +9,22 @@ def displayDialog(window, product_list):
     window2.title("Add Dialog")
     productList = product_list
 
-
-
-
-
-#============================================================
-# Event Handling Methods
+    # ============================================================
+    # Event Handling Methods
 
     def displayAll():
-
         for product in productList:
-            line=product.readType()
-            line+= '\t\t'+product.readName()
-            line+= '\t\t'+product.readCompany()
+            line = product.readType()
+            line += '\t\t' + product.readName()
+            line += '\t\t' + product.readCompany()
             line += '\t\t€' + str(product.readPrice())
             line += '\t\t' + product.readDescriptionPart1()
             line += '\t\t\t\t' + product.readDescriptionPart2()
             line += '\n\n'
             text.insert(END, line)
+
     def readType(self):
         return 'Car'
-
-
 
     def closeEvent():
         window2.destroy()
@@ -43,17 +36,3 @@ def displayDialog(window, product_list):
     text.place(x=20, y=60)
 
     displayAll()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
