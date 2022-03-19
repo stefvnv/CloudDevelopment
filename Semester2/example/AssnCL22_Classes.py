@@ -46,7 +46,7 @@ class Product:
         self.__price = newPrice
 
     def stepOrdered(self):
-        if (self.__available == True):
+        if self.__available == True:
             self.__ordered += 1
 
     def readOrdered(self):
@@ -59,7 +59,6 @@ class Product:
         return self.__manufacturer.readHeadquarters()
 
     # Polymorphic Methods
-
     def readType(self):
         return ''
 
