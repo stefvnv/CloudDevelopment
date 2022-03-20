@@ -39,5 +39,17 @@ class CPU(Part):
 
 
 class CPUCooler(Part):
-    def __init__(self, name, price, ):
+    def __init__(self, name, price, size, speeds, noise):
         super().__init__(name, price)
+        self.__size = size
+        self.__speeds = speeds
+        self.__noise = noise
+
+    def readDesc1(self):
+        return 'Size: ' + str(self.__size)
+
+    def readDesc2(self):
+        return 'Fan Speeds: ' + str(self.__speeds)
+
+    def readDesc3(self):
+        return 'Noise Level: ' + str(self.__noise)
