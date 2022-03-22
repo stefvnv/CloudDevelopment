@@ -1,7 +1,6 @@
 from tkinter import *
 
 from AssnCL22_Classes import *
-
 from AssnCl22_Gui2 import *
 
 window = Tk()
@@ -23,6 +22,7 @@ def display(index):
     global product
     product = productList[index]
     current = index
+
     entry2.delete(0, END)
     entry2.insert(END, product.readName())
     entry3.delete(0, END)
