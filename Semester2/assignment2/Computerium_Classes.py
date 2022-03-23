@@ -3,9 +3,10 @@ class Transport:
         self.__country = country
         self.__company = company
 
-    __dhl_cost = 1000
-    __ups_cost = 1235
-    __fed_cost = 1433
+    __dhl_cost = str(1000)
+    __ups_cost = str(1235)
+    __fed_cost = str(1433)
+    __default_cost = str(0)
 
     def readCountry(self):
         return self.__country
@@ -13,23 +14,31 @@ class Transport:
     def readDeliveryCompany(self):
         return self.__company
 
+    def setCompany(self, compIn):
+        self.__company = compIn
+
+    def readCompany(self):
+        return self.__company
+
     def readPrice(self):
         if self.__company == "DHL":
             return self.__dhl_cost
         elif self.__company == "UPS":
             return self.__ups_cost
-        elif self.__company == "FED":
+        elif self.__company == "FedEx":
             return self.__fed_cost
+        else:
+            return self.__default_cost
 
 
 class Part:
-    def __init__(self, name, price, country_of_origin, transport_type):
+    def __init__(self, name, price, country_of_origin, transport_company):
         # private variables
         self.__name = name
         self.__price = price
 
         # aggregation variables
-        self.__transportation = Transport(country_of_origin, transport_type)
+        self.__transportation = Transport(country_of_origin, transport_company)
 
     def readName(self):
         return self.__name
@@ -41,13 +50,21 @@ class Part:
         self.__price = newPrice
 
     '''Aggregation functions'''
+
     def readTransport(self):
         return self.__transportation.readDeliveryCompany()
 
     def readPriceExt(self):
         return self.__transportation.readPrice()
 
+    def setCompanyExt(self, companyName):
+        self.__transportation.setCompany(companyName)
+
+    def readCompanyExt(self):
+        return self.__transportation.readCompany()
+
     '''Polymorphism'''
+
     def readDesc1(self):
         return ''
 
@@ -59,8 +76,8 @@ class Part:
 
 
 class CPU(Part):
-    def __init__(self, name, price, country_of_origin, transport_type, cores, base, top):
-        super().__init__(name, price, country_of_origin, transport_type,)
+    def __init__(self, name, price, country_of_origin, transport_company, cores, base, top):
+        super().__init__(name, price, country_of_origin, transport_company, )
         self.__cores = cores
         self.__base = base
         self.__top = top
@@ -76,8 +93,8 @@ class CPU(Part):
 
 
 class CPUCooler(Part):
-    def __init__(self, name, price, country_of_origin, transport_type, size, speeds, noise):
-        super().__init__(name, price, country_of_origin, transport_type,)
+    def __init__(self, name, price, country_of_origin, transport_company, size, speeds, noise):
+        super().__init__(name, price, country_of_origin, transport_company, )
         self.__size = size
         self.__speeds = speeds
         self.__noise = noise
