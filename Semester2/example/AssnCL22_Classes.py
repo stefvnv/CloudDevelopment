@@ -14,7 +14,6 @@ class Company:
     def updateQuarters(self, location):
         self.__headQuarters = location
 
-
 # ---------------------------------------------
 
 class Product:
@@ -22,6 +21,7 @@ class Product:
         # private variables
         self.__name = name
         self.__price = price
+
         # aggregation
         self.__manufacturer = Company(company, location)
         self.__ordered = 0

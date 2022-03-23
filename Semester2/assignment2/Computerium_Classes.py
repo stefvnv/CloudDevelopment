@@ -1,15 +1,35 @@
-#class Category:
+class Transport:
+    def __init__(self, country, company):
+        self.__country = country
+        self.__company = company
 
+    __dhl_cost = 1000
+    __ups_cost = 1235
+    __fed_cost = 1433
+
+    def readCountry(self):
+        return self.__country
+
+    def readDeliveryCompany(self):
+        return self.__company
+
+    def readPrice(self):
+        if self.__company == "DHL":
+            return self.__dhl_cost
+        elif self.__company == "UPS":
+            return self.__ups_cost
+        elif self.__company == "FED":
+            return self.__fed_cost
 
 
 class Part:
-    def __init__(self, name, price):
-
+    def __init__(self, name, price, country_of_origin, transport_type):
         # private variables
         self.__name = name
         self.__price = price
 
-        # ADD AGGREGATION - USE ANOTHER CLASS TO ADD CATEGORY
+        # aggregation variables
+        self.__transportation = Transport(country_of_origin, transport_type)
 
     def readName(self):
         return self.__name
@@ -20,10 +40,27 @@ class Part:
     def setPrice(self, newPrice):
         self.__price = newPrice
 
+    '''Aggregation functions'''
+    def readTransport(self):
+        return self.__transportation.readDeliveryCompany()
+
+    def readPriceExt(self):
+        return self.__transportation.readPrice()
+
+    '''Polymorphism'''
+    def readDesc1(self):
+        return ''
+
+    def readDesc2(self):
+        return ''
+
+    def readDesc3(self):
+        return ''
+
 
 class CPU(Part):
-    def __init__(self, name, price, cores, base, top):
-        super().__init__(name, price)
+    def __init__(self, name, price, country_of_origin, transport_type, cores, base, top):
+        super().__init__(name, price, country_of_origin, transport_type,)
         self.__cores = cores
         self.__base = base
         self.__top = top
@@ -39,8 +76,8 @@ class CPU(Part):
 
 
 class CPUCooler(Part):
-    def __init__(self, name, price, size, speeds, noise):
-        super().__init__(name, price)
+    def __init__(self, name, price, country_of_origin, transport_type, size, speeds, noise):
+        super().__init__(name, price, country_of_origin, transport_type,)
         self.__size = size
         self.__speeds = speeds
         self.__noise = noise

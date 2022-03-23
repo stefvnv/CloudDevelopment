@@ -1,10 +1,13 @@
 """Computerium - PC Part Picker
     by Stefana Chiritescu"""
 
-# from tkinter import *
-import tkinter as tk
+from tkinter import *
+from pygame import mixer
+
 from Computerium_Classes import *
 from Computerium_Catalogue import *
+
+mixer.init()
 
 window = Tk()
 
@@ -14,15 +17,15 @@ window.title("Computerium")
 '''Definitions'''
 
 # CPUs
-part_CPU1 = CPU("Intel Core i5-12600k", 340, "10 (6P + 4E) / 16", "3.7GHz", "4.9GHz")
-part_CPU2 = CPU("AMD Ryzen 5 5600X", 350, "6/12", "4.1GHz", "4.8GHz")
+part_CPU1 = CPU("Intel Core i5-12600k", 340, "Ireland", "", "10 (6P + 4E) / 16", "3.7GHz", "4.9GHz")
+part_CPU2 = CPU("AMD Ryzen 5 5600X", 350, "Germany", "", "6/12", "4.1GHz", "4.8GHz")
 # part_CPU3 = CPU("")
 # part_CPU4 = CPU("")
 # part_CPU5 = CPU("")
 
 # CPU coolers
-part_cooler1 = CPUCooler("EK-AIO Basic 240", 88, "240mm", "550-2200RPM", "Up to 33.5dB(A)")
-part_cooler2 = CPUCooler("Deepcool Gammaxx L240 V2", 68, "240mm", "500–1800RPM", "Up to 30dB(A)")
+part_cooler1 = CPUCooler("EK-AIO Basic 240", 88, "United Kingdom", "", "240mm", "550-2200RPM", "Up to 33.5dB(A)")
+part_cooler2 = CPUCooler("Deepcool Gammaxx L240 V2", 68, "Ireland", "", "240mm", "500–1800RPM", "Up to 30dB(A)")
 # part_cooler3 = CPUCooler
 # part_cooler4 = CPUCooler
 # part_cooler5 = CPUCooler
@@ -35,8 +38,6 @@ parts = cpus
 # parts = [part_CPU1, part_CPU2, part_cooler1, part_cooler2]
 global current
 global part
-
-part = parts[0]
 
 '''Event Handling Methods'''
 
@@ -51,21 +52,22 @@ def changeType(*args):
 
     if type.get() == "CPU":
         parts = cpus
+
         print("hey")
 
     if type.get() == "CPU Cooler":
-        print("omg")
         parts = coolers
+
+        print("omg")
+    display(current)
 
 
 def display(index):
     global current
     global part
+
     part = parts[index]
     current = index
-
-    # Option Menu
-    changeType()
 
     entry_name.delete(0, END)
     entry_name.insert(END, part.readName())
@@ -79,9 +81,25 @@ def display(index):
     entry_desc3.delete(0, END)
     entry_desc3.insert(END, part.readDesc3())
 
+    # Radiobuttons
+    if part.readTransport() == "DHL":
+        rb.set(1)
+    elif part.readTransport() == "UPS":
+        rb.set(2)
+    elif part.readTransport() == "FedEx":
+        rb.set(3)
 
-def start_over():
-    """Clears data from all entry fields, unchecks checkbox and sets combo boxes to first (default) values"""
+
+def prevCmd():
+    global current
+
+    if current > 0:
+        current -= 1
+        display(current)
+
+        # Play sound on click
+        mixer.music.load("click.wav")
+        mixer.music.play()
 
 
 def nextCmd():
@@ -91,13 +109,14 @@ def nextCmd():
         current += 1
         display(current)
 
+        # Play sound on click
+        mixer.music.load("click.wav")
+        mixer.music.play()
 
-def prevCmd():
-    global current
 
-    if current > 0:
-        current -= 1
-        display(current)
+# Menu methods
+def start_over():
+    """Clears data from all entry fields, unchecks checkbox and sets combo boxes to first (default) values"""
 
 
 def ext():
@@ -142,7 +161,6 @@ canvas.create_text(230, 220, text="Part Type", anchor="e", font=("Century Gothic
 list_type = ["CPU", "CPU Cooler"]
 type = StringVar()
 combo_type = OptionMenu(window, type, *list_type, command=changeType)
-
 type.set("CPU")
 combo_type.config(fg="white", bg="black", font=("Century Gothic", 12))
 combo_type_window = canvas.create_window(250, 220, anchor="w", window=combo_type)
@@ -155,32 +173,43 @@ entry_name = Entry(window, width=16, fg="navy", bg="lightblue", font=("Century G
 entry_name.focus_set()
 entry_name_window = canvas.create_window(250, 260, anchor="w", window=entry_name)
 
+# DHL, UPS, FedEx radiobutton
+rb = IntVar()
+rb_dhl = Radiobutton(window, text="DHL", font=("Century Gothic", 12), variable=rb, value=1)
+rb_dhl_window = canvas.create_window(200, 300, anchor="e", window=rb_dhl)
+
+rb_ups = Radiobutton(window, text="UPS", font=("Century Gothic", 12), variable=rb, value=2)
+rb_ups_window = canvas.create_window(270, 300, anchor="e", window=rb_ups)
+
+rb_fed = Radiobutton(window, text="FedEx", font=("Century Gothic", 12), variable=rb, value=3)
+rb_fed_window = canvas.create_window(350, 300, anchor="e", window=rb_fed)
+
 # Descriptions text
-canvas.create_text(230, 300, text="Product Details", anchor="e", font=("Century Gothic", 16), fill="black")
+canvas.create_text(230, 400, text="Product Details", anchor="e", font=("Century Gothic", 16), fill="black")
 
 # Description1 entry box
 entry_desc1 = Entry(window, width=34, fg="navy", bg="lightblue", font=("Century Gothic", 12))
-entry_desc1_window = canvas.create_window(400, 340, anchor="e", window=entry_desc1)
+entry_desc1_window = canvas.create_window(400, 440, anchor="e", window=entry_desc1)
 
 # Description2 entry box
 entry_desc2 = Entry(window, width=34, fg="navy", bg="lightblue", font=("Century Gothic", 12))
-entry_desc2_window = canvas.create_window(400, 380, anchor="e", window=entry_desc2)
+entry_desc2_window = canvas.create_window(400, 480, anchor="e", window=entry_desc2)
 
 # Description3 entry box
 entry_desc3 = Entry(window, width=34, fg="navy", bg="lightblue", font=("Century Gothic", 12))
-entry_desc3_window = canvas.create_window(400, 420, anchor="e", window=entry_desc3)
+entry_desc3_window = canvas.create_window(400, 520, anchor="e", window=entry_desc3)
 
 # Previous BUTTON
 button_prev = Button(window, text="Previous", width=12, height=1, fg="lightblue", bg="navy",
                      activebackground="blue", activeforeground="lightblue", font=("Century Gothic", 12),
                      command=prevCmd)
-button_prev_window = canvas.create_window(170, 520, window=button_prev)
+button_prev_window = canvas.create_window(170, 620, window=button_prev)
 
 # Next BUTTON
 button_next = Button(window, text="Next", width=12, height=1, fg="lightblue", bg="navy",
                      activebackground="blue", activeforeground="lightblue", font=("Century Gothic", 12),
                      command=nextCmd)
-button_next_window = canvas.create_window(330, 520, window=button_next)
+button_next_window = canvas.create_window(330, 620, window=button_next)
 
 display(0)
 
