@@ -10,6 +10,7 @@ def displayDialog(window, cart_list):
     window_cart = Toplevel(window)
     window_cart.geometry("1200x600")
     window_cart.title("Computerium - Cart")
+    window_cart.resizable(False, False)
     parts = cart_list
 
     # Event Handling Methods
@@ -55,21 +56,22 @@ def displayDialog(window, cart_list):
 
         text.insert(END, tots)
 
-
     def emptyEvent():
+        del cart_list[:]
 
+        displayParts()
+        displayTotals()
 
     def exitEvent():
         window_cart.destroy()
 
     # Empty button
     button_empty = Button(window_cart, text="Empty Cart", fg="black", font=("Century Gothic", 12), command=emptyEvent)
-    button_empty.place(x=1100, y=400)
-
+    button_empty.place(x=500, y=550)
 
     # Exit button
     button_exit = Button(window_cart, text="Exit", fg="black", font=("Century Gothic", 12), command=exitEvent)
-    button_exit.place(x=1100, y=600)
+    button_exit.place(x=650, y=550)
 
     # Text content
     text = Text(window_cart, undo=True, height=32, width=145)

@@ -13,6 +13,7 @@ mixer.init()
 window = Tk()
 window.geometry("500x700")
 window.title("Computerium")
+window.resizable(False, False)
 
 '''Definitions'''
 
@@ -33,8 +34,20 @@ part_cooler5 = CPUCooler("Be Quiet! Pure Rock 2", 55, "Ireland", "", "1x Pure Wi
                                                                                                                ".8dB("
                                                                                                                "A)")
 
+# Motherboards
+
+# Memory
+
+# Storage
+
+# Video cards
+
 cpus = [part_CPU1, part_CPU2, part_CPU3, part_CPU4, part_CPU5]
 coolers = [part_cooler1, part_cooler2, part_cooler3, part_cooler4, part_cooler5]
+motherboards = []
+memory = []
+storage = []
+videocards = []
 
 parts = cpus
 cart_list = []
