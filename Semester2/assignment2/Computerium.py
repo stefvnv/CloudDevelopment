@@ -3,7 +3,6 @@
 
 from tkinter import *
 from tkinter import messagebox
-
 from pygame import mixer
 
 from Computerium_Classes import *
@@ -14,6 +13,8 @@ window = Tk()
 window.geometry("500x700")
 window.title("Computerium")
 window.resizable(False, False)
+
+background = PhotoImage(file="background.png")
 
 '''Definitions'''
 
@@ -35,24 +36,48 @@ part_cooler5 = CPUCooler("Be Quiet! Pure Rock 2", 55, "Ireland", "", "1x Pure Wi
                                                                                                                "A)")
 
 # Motherboards
+part_motherboard1 = Motherboard("Gigabyte Z690 Aorus Pro", 360, "Spain", "", "LGA 1700", "Intel Z690", "ATX")
+part_motherboard2 = Motherboard("MSI MEG Z690I Unify", 444, "Poland", "", "LGA 1700", "Intel Z690", "Mini-ITX")
+part_motherboard3 = Motherboard("MSI MAG B660M Mortar WIFI DDR4", 220, "Ireland", "", "LGA 1700", "Intel B660", "mATX")
+part_motherboard4 = Motherboard("Asus ROG Maximus XIII Hero", 570, "Portugal", "", "LGA 1200", "Intel Z590", "ATX")
+part_motherboard5 = Motherboard("Gigabyte X299X Designare 10G", 680, "Poland", "", "LGA 2066", "Intel X299 PCH", "EATX")
 
 # Memory
+part_memory1 = Memory("Corsair Vengeance LED", 95, "Spain", "", "DDR4", "6GB Kit (2 x 8GB)", "3200MHz")
+part_memory2 = Memory("G.Skill Trident Z RGB", 230, "Portugal", "", "DDR4", "16GB (2x8GB)", "3200MHz")
+part_memory3 = Memory("Kingston HyperX Predator", 160, "Ireland", "", "DDR4", "8GB, 16GB", "up to 4600MHz")
+part_memory4 = Memory("Kingston HyperX Fury", 115, "Spain", "", "DDR4", "4GB, 8GB, 16GB, 32GB", "up to 3733MHz")
+part_memory5 = Memory("Corsair Dominator Platinum RGB", 125, "United Kingdom", "", "DDR4", "16GB (2 x 8GB)", "3000MHz")
 
 # Storage
+part_storage1 = Storage("Samsung 980 Pro", 230, "United Kingdom", "", "250GB, 500GB, 1TB, 2TB", "M.2 2280 Single-sided",
+                        "7,000 MBps / 5,000 MBps")
+part_storage2 = Storage("Kingston KC3000", 245, "Portugal", "", "512GB, 1TB, 2TB, 4TB", "M.2 2280 Double-sided",
+                        "7,000 MBps / 7,000 MBps")
+part_storage3 = Storage("WD Black SN850", 110, "United Kingdom", "", "250GB, 500GB, 1TB, 2TB", "M.2 2280 Single-sided",
+                        "7,000 MBps / 5,300 MBps")
+part_storage4 = Storage("Crucial P5 Plus", 125, "Ireland", "", "500GB, 1TB, and 2TB", "M.2 2280 Single-sided",
+                        "Up to 6,600 MBps / 5,000 MBps")
+part_storage5 = Storage("Sabrent Rocket 4 Plus", 135, "United Kingdom", "", "1TB, 2TB, 4TB", "M.2 2280 Double-sided",
+                        "7,200 MBps / 6,900 MBps")
 
 # Video cards
+part_graphics1 = Graphics("Nvidia GeForce RTX 3080", 1150, "Germany", "", "1,440MHz", "1,710MHz", "10GB GDDR6X")
+part_graphics2 = Graphics("AMD Radeon RX 6800 XT", 1440, "Ireland", "", "1,825MHz", "2,250MHz", "16GB GDDR6")
+part_graphics3 = Graphics("Nvidia GeForce RTX 3060 Ti", 630, "United Kingdom", "", "1,410MHz", "1,665MHz", "8GB GDDR6")
+part_graphics4 = Graphics("Nvidia GeForce RTX 3070", 705, "Germany", "", "1,500MHz", "1,725MHz", "8GB GDDR6")
+part_graphics5 = Graphics("AMD Radeon RX 6900 XT", 1710, "Spain", "", "1,825MHz", "2,250MHz", "16GB GDDR6")
 
 cpus = [part_CPU1, part_CPU2, part_CPU3, part_CPU4, part_CPU5]
 coolers = [part_cooler1, part_cooler2, part_cooler3, part_cooler4, part_cooler5]
-motherboards = []
-memory = []
-storage = []
-videocards = []
+motherboards = [part_motherboard1, part_motherboard2, part_motherboard3, part_motherboard4, part_motherboard5]
+memory = [part_memory1, part_memory2, part_memory3, part_memory4, part_memory5]
+storage = [part_storage1, part_storage2, part_storage3, part_storage4, part_storage5]
+graphics = [part_graphics1, part_graphics2, part_graphics3, part_graphics4, part_graphics5]
 
 parts = cpus
 cart_list = []
 
-# parts = [part_CPU1, part_CPU2, part_cooler1, part_cooler2]
 global current
 global part
 
@@ -65,6 +90,8 @@ def displayChange():
 
 
 def changeType(*args):
+    """Changes parts array to relevant part on option menu click"""
+
     global parts
 
     if type.get() == "CPU":
@@ -73,8 +100,22 @@ def changeType(*args):
     if type.get() == "CPU Cooler":
         parts = coolers
 
-    radioChange()
+    if type.get() == "CPU Cooler":
+        parts = coolers
 
+    if type.get() == "Motherboard":
+        parts = motherboards
+
+    if type.get() == "Memory":
+        parts = memory
+
+    if type.get() == "Storage":
+        parts = storage
+
+    if type.get() == "Graphics Card":
+        parts = graphics
+
+    radioChange()
     display(0)
 
 
@@ -107,13 +148,10 @@ def radioChange():
 
     if rb.get() == 1:
         parts[current].setCompanyExt("DHL")
-        print("DHL ADDED")
     elif rb.get() == 2:
         parts[current].setCompanyExt("UPS")
-        print("UPS ADDED")
     elif rb.get() == 3:
         parts[current].setCompanyExt("FedEx")
-        print("FedEx ADDED")
 
 
 def prevCmd():
@@ -150,28 +188,35 @@ def addCmd():
     messagebox.showinfo("Notification", type.get() + " added to cart successfully.")
 
 
+def clearCmd():
+    global cart_list
+    del cart_list[:]
+
+    messagebox.showinfo("Notification", "Cart emptied successfully.")
+
+
 def ext():
     """Exits the application"""
     exit()
 
 
 '''GUI'''
-# Menu
+# MENU
 menu = Menu(window)
 window.config(menu=menu)
 
 sub_options = Menu(menu)
 menu.add_cascade(label="Cart", menu=sub_options)
 sub_options.add_command(label="View Cart", command=lambda: displayDialog(window, cart_list))
+sub_options.add_command(label="Clear Cart", command=clearCmd)
 sub_options.add_command(label="Exit", command=ext)
 
 # CANVAS
-canvas = Canvas(window, width=600, height=700, highlightthickness=0)
+canvas = Canvas(window, width=500, height=700, highlightthickness=0)
 canvas.pack(fill="both", expand=True)
 
 # Set Image in Canvas
-# canvas.create_image(0, 0, image=background, anchor="nw")
-
+canvas.create_image(0, 0, image=background, anchor="nw")
 
 # Title
 canvas.create_text(250, 40, text="COMPUTERIUM", font=("Haettenschweiler", 32), fill="grey")
@@ -183,7 +228,7 @@ canvas.create_text(250, 70, text="PC Part Picker", font=("Century Gothic", 21, "
 canvas.create_text(230, 160, text="Part Type", anchor="e", font=("Century Gothic", 16), fill="#000000")
 
 # Part Type combobox
-list_type = ["CPU", "CPU Cooler"]
+list_type = ["CPU", "CPU Cooler", "Motherboard", "Memory", "Storage", "Graphics Card"]
 type = StringVar()
 combo_type = OptionMenu(window, type, *list_type, command=changeType)
 type.set("CPU")

@@ -7,6 +7,7 @@ total_total_price = 0
 
 
 def displayDialog(window, cart_list):
+
     window_cart = Toplevel(window)
     window_cart.geometry("1200x600")
     window_cart.title("Computerium - Cart")
@@ -15,6 +16,7 @@ def displayDialog(window, cart_list):
 
     # Event Handling Methods
     def displayHeadings():
+
         heading = "Name"
         heading += '\t\t\t\t' + "Company"
         heading += '\t\t' + "Item Price"
@@ -28,6 +30,9 @@ def displayDialog(window, cart_list):
         global total_item_price
         global total_shipping_price
         global total_total_price
+        total_item_price = 0
+        total_shipping_price = 0
+        total_total_price = 0
 
         for part in parts:
             line = part.readName()
@@ -49,29 +54,19 @@ def displayDialog(window, cart_list):
         global total_total_price
         tots = "Total:"
         tots += '\t\t\t\t' + "\t"
-        tots += '\t' + str(total_item_price)
-        tots += '\t\t' + str(total_shipping_price)
-        tots += '\t\t' + str(total_total_price)
+        tots += '\t€' + str(total_item_price)
+        tots += '\t\t€' + str(total_shipping_price)
+        tots += '\t\t€' + str(total_total_price)
         tots += '\n\n'
 
         text.insert(END, tots)
 
-    def emptyEvent():
-        del cart_list[:]
-
-        displayParts()
-        displayTotals()
-
     def exitEvent():
         window_cart.destroy()
 
-    # Empty button
-    button_empty = Button(window_cart, text="Empty Cart", fg="black", font=("Century Gothic", 12), command=emptyEvent)
-    button_empty.place(x=500, y=550)
-
     # Exit button
     button_exit = Button(window_cart, text="Exit", fg="black", font=("Century Gothic", 12), command=exitEvent)
-    button_exit.place(x=650, y=550)
+    button_exit.place(x=500, y=550)
 
     # Text content
     text = Text(window_cart, undo=True, height=32, width=145)

@@ -107,3 +107,71 @@ class CPUCooler(Part):
 
     def readDesc3(self):
         return 'Noise Level: ' + str(self.__noise)
+
+
+class Motherboard(Part):
+    def __init__(self, name, price, country_of_origin, transport_company, socket, chipset, factor):
+        super().__init__(name, price, country_of_origin, transport_company, )
+        self.__socket = socket
+        self.__chipset = chipset
+        self.__factor = factor
+
+    def readDesc1(self):
+        return 'Socket: ' + str(self.__socket)
+
+    def readDesc2(self):
+        return 'Chipset: ' + str(self.__chipset)
+
+    def readDesc3(self):
+        return 'Form Factor: ' + str(self.__factor)
+
+
+class Memory(Part):
+    def __init__(self, name, price, country_of_origin, transport_company, type, capacity, speed):
+        super().__init__(name, price, country_of_origin, transport_company, )
+        self.__type = type
+        self.__capacity = capacity
+        self.__speed = speed
+
+    def readDesc1(self):
+        return 'Type: ' + str(self.__type)
+
+    def readDesc2(self):
+        return 'Capacity: ' + str(self.__capacity)
+
+    def readDesc3(self):
+        return 'Speed: ' + str(self.__speed)
+
+
+class Storage(Part):
+    def __init__(self, name, price, country_of_origin, transport_company, capacity, factor, sequential):
+        super().__init__(name, price, country_of_origin, transport_company, )
+        self.__capacity = capacity
+        self.__factor = factor
+        self.__sequential = sequential
+
+    def readDesc1(self):
+        return 'Capacities: ' + str(self.__capacity)
+
+    def readDesc2(self):
+        return 'Form Factor: ' + str(self.__factor)
+
+    def readDesc3(self):
+        return 'Sequential Read/Writes: ' + str(self.__sequential)
+
+
+class Graphics(Part):
+    def __init__(self, name, price, country_of_origin, transport_company, base, boost, memory):
+        super().__init__(name, price, country_of_origin, transport_company, )
+        self.__base = base
+        self.__boost = boost
+        self.__memory = memory
+
+    def readDesc1(self):
+        return 'Base clock: ' + str(self.__base)
+
+    def readDesc2(self):
+        return 'Boost clock: ' + str(self.__boost)
+
+    def readDesc3(self):
+        return 'Memory: ' + str(self.__memory)
