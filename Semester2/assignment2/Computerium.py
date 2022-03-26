@@ -1,12 +1,12 @@
 """Computerium - PC Part Picker
     by Stefana Chiritescu"""
 
-from tkinter import *
 from tkinter import messagebox
+
 from pygame import mixer
 
-from Computerium_Classes import *
 from Computerium_Cart import *
+from Computerium_Classes import *
 
 mixer.init()
 window = Tk()
@@ -85,12 +85,14 @@ global part
 
 
 def displayChange():
+    """Displays current part"""
+
     global current
     display(current)
 
 
 def changeType(*args):
-    """Changes parts array to relevant part on option menu click"""
+    """Changes parts array to matching part"""
 
     global parts
 
@@ -120,6 +122,8 @@ def changeType(*args):
 
 
 def display(index):
+    """Refreshes entries"""
+
     global current
     global part
 
@@ -143,6 +147,8 @@ def display(index):
 
 
 def radioChange():
+    """Sets transport company for current part using radio buttons and plays sound on success"""
+
     global parts
     global part
 
@@ -153,45 +159,58 @@ def radioChange():
     elif rb.get() == 3:
         parts[current].setCompanyExt("FedEx")
 
+    mixer.music.load("radio.mp3")
+    mixer.music.play()
+
 
 def prevCmd():
+    """Displays the previous part if there is one and plays sound on success"""
+
     global current
 
     if current > 0:
         current -= 1
         display(current)
 
-        # Play sound on click
         mixer.music.load("click.wav")
         mixer.music.play()
 
 
 def nextCmd():
+    """Displays the next part if there is one and plays sound on success"""
+
     global current
 
     if current < (len(parts) - 1):
         current += 1
         display(current)
 
-        # Play sound on click
         mixer.music.load("click.wav")
         mixer.music.play()
 
 
 # Menu methods
 def addCmd():
+    """Adds current part to cart_list array and displays message on success"""
+
     global current
     global parts
     global cart_list
     cart_list.append(parts[current])
 
+    mixer.music.load("success.mp3")
+    mixer.music.play()
     messagebox.showinfo("Notification", type.get() + " added to cart successfully.")
 
 
-def clearCmd():
+def emptyCmd():
+    """Empties cart_list array, displays message and plays sound on success"""
+
     global cart_list
     del cart_list[:]
 
+    mixer.music.load("success.mp3")
+    mixer.music.play()
     messagebox.showinfo("Notification", "Cart emptied successfully.")
 
 
@@ -208,7 +227,7 @@ window.config(menu=menu)
 sub_options = Menu(menu)
 menu.add_cascade(label="Cart", menu=sub_options)
 sub_options.add_command(label="View Cart", command=lambda: displayDialog(window, cart_list))
-sub_options.add_command(label="Clear Cart", command=clearCmd)
+sub_options.add_command(label="Empty Cart", command=emptyCmd)
 sub_options.add_command(label="Exit", command=ext)
 
 # CANVAS
@@ -222,84 +241,86 @@ canvas.create_image(0, 0, image=background, anchor="nw")
 canvas.create_text(250, 40, text="COMPUTERIUM", font=("Haettenschweiler", 32), fill="grey")
 
 # Description
-canvas.create_text(250, 70, text="PC Part Picker", font=("Century Gothic", 21, "bold"), fill="black")
+canvas.create_text(250, 70, text="PC Part Picker", font=("Century Gothic", 21, "bold"), fill="white")
 
 # Part Type text
-canvas.create_text(200, 160, text="Part Type", anchor="e", font=("Century Gothic", 16), fill="#000000")
+canvas.create_text(180, 160, text="Part Type", anchor="e", font=("Century Gothic", 14), fill="white")
 
 # Part Type combobox
 list_type = ["CPU", "CPU Cooler", "Motherboard", "Memory", "Storage", "Graphics Card"]
 type = StringVar()
 combo_type = OptionMenu(window, type, *list_type, command=changeType)
 type.set("CPU")
-combo_type.config(fg="white", bg="black", font=("Century Gothic", 12))
-combo_type["menu"].config(fg="navy", font=("Century Gothic", 12))
-combo_type_window = canvas.create_window(220, 160, anchor="w", window=combo_type)
+combo_type.config(fg="white", bg="grey", font=("Century Gothic", 12))
+combo_type["menu"].config(fg="black", font=("Century Gothic", 12))
+combo_type_window = canvas.create_window(200, 160, anchor="w", window=combo_type)
 
 # Name text
-canvas.create_text(200, 200, text="Name", anchor="e", font=("Century Gothic", 16), fill="black")
+canvas.create_text(180, 200, text="Name", anchor="e", font=("Century Gothic", 14), fill="white")
 
 # Name entry box
-entry_name = Entry(window, width=24, fg="navy", bg="lightblue", font=("Century Gothic", 12))
+entry_name = Entry(window, width=24, fg="#303030", bg="lightgrey", font=("Century Gothic", 12))
 entry_name.focus_set()
-entry_name_window = canvas.create_window(220, 200, anchor="w", window=entry_name)
+entry_name_window = canvas.create_window(200, 200, anchor="w", window=entry_name)
 
-# Select shipping type text
-canvas.create_text(100, 260, text="Select shipping method:", anchor="w", font=("Century Gothic", 16), fill="black")
+# Descriptions text
+canvas.create_text(180, 260, text="Part Details", anchor="e", font=("Century Gothic", 14), fill="white")
+
+# Description1 entry box
+entry_desc1 = Entry(window, width=42, fg="#303030", bg="lightgrey", font=("Century Gothic", 12))
+entry_desc1_window = canvas.create_window(440, 300, anchor="e", window=entry_desc1)
+
+# Description2 entry box
+entry_desc2 = Entry(window, width=42, fg="#303030", bg="lightgrey", font=("Century Gothic", 12))
+entry_desc2_window = canvas.create_window(440, 340, anchor="e", window=entry_desc2)
+
+# Description3 entry box
+entry_desc3 = Entry(window, width=42, fg="#303030", bg="lightgrey", font=("Century Gothic", 12))
+entry_desc3_window = canvas.create_window(440, 380, anchor="e", window=entry_desc3)
+
+# Choose a shipping method text
+canvas.create_text(70, 440, text="Choose shipping method", anchor="w", font=("Century Gothic", 14), fill="white")
 
 # DHL, UPS, FedEx radiobutton
 rb = IntVar()
 rb.set(1)
 
-rb_dhl = Radiobutton(window, text="DHL", font=("Century Gothic", 12), background="white", variable=rb, value=1, command=radioChange)
-rb_dhl_window = canvas.create_window(200, 300, anchor="e", window=rb_dhl)
+rb_dhl = Radiobutton(window, text="DHL", font=("Century Gothic", 14), selectcolor="#262626", fg="white",
+                     background="#262626", variable=rb, value=1, command=radioChange)
+rb_dhl_window = canvas.create_window(200, 480, anchor="e", window=rb_dhl)
 
-rb_ups = Radiobutton(window, text="UPS", font=("Century Gothic", 12), background="white", variable=rb, value=2, command=radioChange)
-rb_ups_window = canvas.create_window(270, 300, anchor="e", window=rb_ups)
+rb_ups = Radiobutton(window, text="UPS", font=("Century Gothic", 14), selectcolor="#262626", fg="white",
+                     background="#262626", variable=rb, value=2, command=radioChange)
+rb_ups_window = canvas.create_window(270, 480, anchor="e", window=rb_ups)
 
-rb_fed = Radiobutton(window, text="FedEx", font=("Century Gothic", 12), background="white", variable=rb, value=3, command=radioChange)
-rb_fed_window = canvas.create_window(350, 300, anchor="e", window=rb_fed)
-
-# Descriptions text
-canvas.create_text(230, 340, text="Product Details", anchor="e", font=("Century Gothic", 16), fill="black")
-
-# Description1 entry box
-entry_desc1 = Entry(window, width=36, fg="navy", bg="lightblue", font=("Century Gothic", 12))
-entry_desc1_window = canvas.create_window(400, 380, anchor="e", window=entry_desc1)
-
-# Description2 entry box
-entry_desc2 = Entry(window, width=36, fg="navy", bg="lightblue", font=("Century Gothic", 12))
-entry_desc2_window = canvas.create_window(400, 420, anchor="e", window=entry_desc2)
-
-# Description3 entry box
-entry_desc3 = Entry(window, width=36, fg="navy", bg="lightblue", font=("Century Gothic", 12))
-entry_desc3_window = canvas.create_window(400, 460, anchor="e", window=entry_desc3)
+rb_fed = Radiobutton(window, text="FedEx", font=("Century Gothic", 14), selectcolor="#262626", fg="white",
+                     background="#262626", variable=rb, value=3, command=radioChange)
+rb_fed_window = canvas.create_window(360, 480, anchor="e", window=rb_fed)
 
 # Price text
-canvas.create_text(100, 500, text="Price", anchor="e", font=("Century Gothic", 16), fill="black")
+canvas.create_text(150, 540, text="Price", anchor="e", font=("Century Gothic", 16), fill="white")
 
 # Price entry box
-entry_price = Entry(window, width=10, fg="navy", bg="lightblue", font=("Century Gothic", 12))
-entry_price_window = canvas.create_window(200, 500, anchor="e", window=entry_price)
+entry_price = Entry(window, width=4, fg="black", bg="lightgrey", font=("Century Gothic", 14))
+entry_price_window = canvas.create_window(210, 540, anchor="e", window=entry_price)
 
-# Add BUTTON
-button_add = Button(window, text="Add to cart", width=12, height=1, fg="lightblue", bg="navy",
-                    activebackground="blue", activeforeground="lightblue", font=("Century Gothic", 12),
+# Add button
+button_add = Button(window, text="Add to cart", width=12, height=1, fg="#303030", bg="white",
+                    activebackground="lightgrey", activeforeground="black", font=("Century Gothic", 14, "bold"),
                     command=addCmd)
-button_add_window = canvas.create_window(300, 500, window=button_add)
+button_add_window = canvas.create_window(340, 540, window=button_add)
 
-# Previous BUTTON
-button_prev = Button(window, text="Previous", width=12, height=1, fg="lightblue", bg="navy",
-                     activebackground="blue", activeforeground="lightblue", font=("Century Gothic", 12),
+# Previous button
+button_prev = Button(window, text="Previous", width=10, height=1, fg="#303030", bg="lightgrey",
+                     activebackground="grey", activeforeground="black", font=("Century Gothic", 12, "bold"),
                      command=prevCmd)
-button_prev_window = canvas.create_window(170, 620, window=button_prev)
+button_prev_window = canvas.create_window(160, 630, window=button_prev)
 
-# Next BUTTON
-button_next = Button(window, text="Next", width=12, height=1, fg="lightblue", bg="navy",
-                     activebackground="blue", activeforeground="lightblue", font=("Century Gothic", 12),
+# Next button
+button_next = Button(window, text="Next", width=10, height=1, fg="#303030", bg="lightgrey",
+                     activebackground="grey", activeforeground="black", font=("Century Gothic", 12, "bold"),
                      command=nextCmd)
-button_next_window = canvas.create_window(330, 620, window=button_next)
-
+button_next_window = canvas.create_window(340, 630, window=button_next)
 
 display(0)
 radioChange()

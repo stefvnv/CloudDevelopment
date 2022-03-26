@@ -1,11 +1,12 @@
+# Aggregation class
 class Transport:
     def __init__(self, country, company):
         self.__country = country
         self.__company = company
 
-    __dhl_cost = str(1000)
-    __ups_cost = str(1235)
-    __fed_cost = str(1433)
+    __dhl_cost = str(20)
+    __ups_cost = str(10)
+    __fed_cost = str(25)
     __default_cost = str(0)
 
     def readCountry(self):
@@ -33,11 +34,10 @@ class Transport:
 
 class Part:
     def __init__(self, name, price, country_of_origin, transport_company):
-        # private variables
         self.__name = name
         self.__price = price
 
-        # aggregation variables
+        # Aggregation variables
         self.__transportation = Transport(country_of_origin, transport_company)
 
     def readName(self):
@@ -49,8 +49,7 @@ class Part:
     def setPrice(self, newPrice):
         self.__price = newPrice
 
-    '''Aggregation functions'''
-
+    # Aggregation methods
     def readTransport(self):
         return self.__transportation.readDeliveryCompany()
 
@@ -63,8 +62,7 @@ class Part:
     def readCompanyExt(self):
         return self.__transportation.readCompany()
 
-    '''Polymorphism'''
-
+    # Polymorphic methods
     def readDesc1(self):
         return ''
 
@@ -75,6 +73,7 @@ class Part:
         return ''
 
 
+# Inheritance (extended class)
 class CPU(Part):
     def __init__(self, name, price, country_of_origin, transport_company, cores, base, top):
         super().__init__(name, price, country_of_origin, transport_company, )

@@ -1,5 +1,4 @@
 from tkinter import *
-from Computerium_Classes import *
 
 total_item_price = 0
 total_shipping_price = 0
@@ -7,32 +6,43 @@ total_total_price = 0
 
 
 def displayDialog(window, cart_list):
+    """Creates the cart GUI"""
 
     window_cart = Toplevel(window)
     window_cart.geometry("1200x600")
     window_cart.title("Computerium - Cart")
+    window_cart.config(bg="#303030")
     window_cart.resizable(False, False)
     parts = cart_list
 
-    # Event Handling Methods
     def displayHeadings():
+        """Displays the headings in the text box"""
+
+        text.configure(state="normal")
 
         heading = "Name"
         heading += '\t\t\t\t' + "Company"
-        heading += '\t\t' + "Item Price"
+        heading += '\t\t' + "Part Price"
         heading += '\t\t' + "Shipping Price"
         heading += '\t\t' + "Total Price"
-        heading += '\n\n'
+        heading += '\n'
+        heading += '----------------------------------------------------------------------------------------------------------------------------------------------------------------\n'
 
         text.insert(END, heading)
+        text.configure(state="disabled")
 
     def displayParts():
+        """Displays parts"""
+
         global total_item_price
         global total_shipping_price
         global total_total_price
+
         total_item_price = 0
         total_shipping_price = 0
         total_total_price = 0
+
+        text.configure(state="normal")
 
         for part in parts:
             line = part.readName()
@@ -44,15 +54,21 @@ def displayDialog(window, cart_list):
             tot = int(part.readPrice() + int(part.readPriceExt()))
             total_total_price += tot
             line += '\t\t' + str(tot)
-            line += '\n\n'
+            line += '\n'
 
             text.insert(END, line)
+            text.configure(state="disabled")
 
     def displayTotals():
+        """Displays the total price of parts, shipping and their addition"""
+
+        text.configure(state="normal")
+
         global total_item_price
         global total_shipping_price
         global total_total_price
-        tots = "Total:"
+        tots = '----------------------------------------------------------------------------------------------------------------------------------------------------------------\n'
+        tots += "Total:"
         tots += '\t\t\t\t' + "\t"
         tots += '\t€' + str(total_item_price)
         tots += '\t\t€' + str(total_shipping_price)
@@ -60,16 +76,20 @@ def displayDialog(window, cart_list):
         tots += '\n\n'
 
         text.insert(END, tots)
+        text.configure(state="disabled")
 
-    def exitEvent():
+    def closeEvent():
+        """Exits the GUI"""
+
         window_cart.destroy()
 
-    # Exit button
-    button_exit = Button(window_cart, text="Exit", fg="black", font=("Century Gothic", 12), command=exitEvent)
-    button_exit.place(x=500, y=550)
+    # Close button
+    button_exit = Button(window_cart, text="Exit", fg="black", bg="white", font=("Century Gothic", 12),
+                         command=closeEvent)
+    button_exit.place(x=600, y=550)
 
     # Text content
-    text = Text(window_cart, undo=True, height=32, width=145)
+    text = Text(window_cart, undo=True, height=24, width=128, font=("Century Gothic", 12), state="disabled")
     text.place(x=20, y=20)
 
     displayHeadings()
