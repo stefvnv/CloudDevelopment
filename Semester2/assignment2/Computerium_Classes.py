@@ -37,7 +37,6 @@ class Part:
         self.__name = name
         self.__price = price
 
-        # Aggregation variables
         self.__transportation = Transport(country_of_origin, transport_company)
 
     def readName(self):
@@ -76,7 +75,7 @@ class Part:
 # Inheritance (extended class)
 class CPU(Part):
     def __init__(self, name, price, country_of_origin, transport_company, cores, base, top):
-        super().__init__(name, price, country_of_origin, transport_company, )
+        super().__init__(name, price, country_of_origin, transport_company)
         self.__cores = cores
         self.__base = base
         self.__top = top
@@ -93,7 +92,7 @@ class CPU(Part):
 
 class CPUCooler(Part):
     def __init__(self, name, price, country_of_origin, transport_company, size, speeds, noise):
-        super().__init__(name, price, country_of_origin, transport_company, )
+        super().__init__(name, price, country_of_origin, transport_company)
         self.__size = size
         self.__speeds = speeds
         self.__noise = noise
@@ -110,7 +109,7 @@ class CPUCooler(Part):
 
 class Motherboard(Part):
     def __init__(self, name, price, country_of_origin, transport_company, socket, chipset, factor):
-        super().__init__(name, price, country_of_origin, transport_company, )
+        super().__init__(name, price, country_of_origin, transport_company)
         self.__socket = socket
         self.__chipset = chipset
         self.__factor = factor
@@ -127,7 +126,7 @@ class Motherboard(Part):
 
 class Memory(Part):
     def __init__(self, name, price, country_of_origin, transport_company, type, capacity, speed):
-        super().__init__(name, price, country_of_origin, transport_company, )
+        super().__init__(name, price, country_of_origin, transport_company)
         self.__type = type
         self.__capacity = capacity
         self.__speed = speed
@@ -144,7 +143,7 @@ class Memory(Part):
 
 class Storage(Part):
     def __init__(self, name, price, country_of_origin, transport_company, capacity, factor, sequential):
-        super().__init__(name, price, country_of_origin, transport_company, )
+        super().__init__(name, price, country_of_origin, transport_company)
         self.__capacity = capacity
         self.__factor = factor
         self.__sequential = sequential
@@ -161,7 +160,7 @@ class Storage(Part):
 
 class Graphics(Part):
     def __init__(self, name, price, country_of_origin, transport_company, base, boost, memory):
-        super().__init__(name, price, country_of_origin, transport_company, )
+        super().__init__(name, price, country_of_origin, transport_company)
         self.__base = base
         self.__boost = boost
         self.__memory = memory
