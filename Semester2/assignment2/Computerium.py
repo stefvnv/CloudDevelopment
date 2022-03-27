@@ -1,8 +1,9 @@
 """Computerium - PC Part Picker
     by Stefana Chiritescu"""
 
-from tkinter import messagebox
+import copy
 
+from tkinter import messagebox
 from pygame import mixer
 
 from Computerium_Cart import *
@@ -196,7 +197,7 @@ def addCmd():
     global current
     global parts
     global cart_list
-    cart_list.append(parts[current])
+    cart_list.append(copy.deepcopy(parts[current]))
 
     mixer.music.load("success.mp3")
     mixer.music.play()
