@@ -202,6 +202,8 @@ def addCmd():
     mixer.music.play()
     messagebox.showinfo("Notification", type.get() + " added to cart successfully.")
 
+    radioChange()
+
 
 def emptyCmd():
     """Empties cart_list array, displays message and plays sound on success"""

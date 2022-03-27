@@ -18,7 +18,7 @@ def displayDialog(window, cart_list):
     def displayHeadings():
         """Displays the headings in the text box"""
 
-        text.configure(state="normal")
+        text.config(state="normal")
 
         heading = "Name"
         heading += '\t\t\t\t' + "Company"
@@ -29,7 +29,8 @@ def displayDialog(window, cart_list):
         heading += '----------------------------------------------------------------------------------------------------------------------------------------------------------------\n'
 
         text.insert(END, heading)
-        text.configure(state="disabled")
+
+        text.config(state="disabled")
 
     def displayParts():
         """Displays parts"""
@@ -42,9 +43,8 @@ def displayDialog(window, cart_list):
         total_shipping_price = 0
         total_total_price = 0
 
-        text.configure(state="normal")
-
         for part in parts:
+            text.config(state="normal")
             line = part.readName()
             line += '\t\t\t\t' + part.readCompanyExt()
             line += '\t\t' + str(part.readPrice())
@@ -57,12 +57,13 @@ def displayDialog(window, cart_list):
             line += '\n'
 
             text.insert(END, line)
-            text.configure(state="disabled")
+
+            text.config(state="disabled")
 
     def displayTotals():
         """Displays the total price of parts, shipping and their addition"""
 
-        text.configure(state="normal")
+        text.config(state="normal")
 
         global total_item_price
         global total_shipping_price
@@ -76,7 +77,8 @@ def displayDialog(window, cart_list):
         tots += '\n\n'
 
         text.insert(END, tots)
-        text.configure(state="disabled")
+
+        text.config(state="disabled")
 
     def closeEvent():
         """Exits the GUI"""
