@@ -93,7 +93,7 @@ def displayChange():
 
 
 def changeType(*args):
-    """Changes parts array to matching part"""
+    """Changes parts to matching part"""
 
     global parts
 
