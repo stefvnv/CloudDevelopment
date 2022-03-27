@@ -1,3 +1,6 @@
+"""Computerium_Cart
+    by Stefana Chiritescu"""
+
 from tkinter import *
 
 total_item_price = 0

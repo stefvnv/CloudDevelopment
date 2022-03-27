@@ -1,3 +1,7 @@
+"""Computerium_Classes
+    by Stefana Chiritescu"""
+
+
 # Aggregation class
 class Transport:
     def __init__(self, country, company):
